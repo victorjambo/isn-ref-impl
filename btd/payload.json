@@ -1,0 +1,27 @@
+{
+  "h": "event",
+  "name": "Cars (movement ref: 5-GB-GB20250426-100001-119)",
+  "start": "2024-07-14T08:00:00Z",
+  "summary": "moving to Seasons Road with ETA 2025-04-25T11:00:00+00:00",
+  "category": [
+      "pre-notification",
+      "isn@btd-1.info-sharing.network"
+  ],
+  "payload": {
+      "chedNumbers": [
+          "CHEDP.GB.2025.5571031"
+      ],
+      "cnCodes": [
+          "1602"
+      ],
+      "commodityDescription": "Cars",
+      "countryOfOrigin": "KE",
+      "exporterEORI": "PL3900000001KE",
+      "importerEORI": "GB20250425KE",
+      "location": "Industrial Park (50.9457, 16.3523)",
+      "mode": "RORO",
+      "unitIdentification": {
+          "trailerRegistrationNumber": "TSW450AF"
+      }
+  }
+}
