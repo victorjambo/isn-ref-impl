@@ -54,3 +54,16 @@ This project fork comes with configs that should work out of the box.
   ```bash
   clj -X app.core/-main
   ```
+
+- The frontend UI runs on port 5001. Access the dashboard from http://localhost:5001
+
+- On the UI dashboard, click login and paste `https://victorjambo.github.io` in the input field.
+
+- Enure your `.env.serve` file (In TWIN repo) has these variables. `BTD_FSA_ACCESS_TOKEN` and `BTD_PHA_ACCESS_TOKEN` can be copied from http://localhost:5001/account
+
+  ```bash
+  BTD_FSA_ENDPOINT=http://localhost:5001/micropub
+  BTD_FSA_ACCESS_TOKEN=xxx
+  BTD_PHA_ENDPOINT=http://localhost:5001/micropub-btd
+  BTD_PHA_ACCESS_TOKEN=xxx
+  ```
