@@ -456,6 +456,22 @@
              (sse-send (json/write-str {:name "isn-signal" :data post-data}))
              (->201 loc-hdr "post has been created")))))
 
+;; https://www.w3.org/TR/micropub/
+;; The means by which we publish a signal on to an ISN Site
+(defn- micropub-btd [{:keys [cfg headers json-params params] :as req}]
+  (let [{:keys [mp-syndicated-to] :as params-kw} (keywordize-keys (or json-params params))
+        {id :id token :token} (token-header->id req)
+        provider (trim (:host (uri id)))
+        {:keys [isn permafrag] :as post-data} (dispatch-post {:cfg cfg :m (assoc params-kw :provider provider)})
+        in (cond (nil? (headers "authorization")) :400 (not (authcn? {:cfg cfg :id id :isn isn})) :401 (empty? post-data) :400 :else :201)]
+    (condp = in
+      :400 (->400 "bad request - please check your request is spec compliant")
+      :401 (->401 "unauthorized - credentials or token not valid")
+      :201 (let [loc-hdr (str site-root "/" permafrag)]
+             (its/create pr-fs (str "/" permafrag ".edn") post-data)
+             (sse-send (json/write-str {:name "isn-signal" :data post-data}))
+             (->201 loc-hdr "post has been created")))))
+
 ; REVIEW: needs to be modified to only send specific ISN relevant signals
 ; REVIEW: needs to have cfg passed as input
 (defn- sse-stream-ready [event-chan {:keys [request]}] 
@@ -482,6 +498,7 @@
     ["/documentation"                       :get  (conj ses-tor `cfg-tor `documentation)]
     ["/privacy"                             :get  (conj htm-tor `cfg-tor `privacy)]
     ["/micropub"                            :post (conj api-tors `cfg-tor `micropub)]
+    ["/micropub-btd"                        :post (conj api-tors `cfg-tor `micropub-btd)]
     ["/signals"                             :get  (conj api-tors `cfg-tor `signals)]
     ["/status"                              :get status :route-name :status]
     ["/stream/sse/:client/:connection-uuid" :get (sse/start-event-stream sse-stream-ready) :route-name :stream]})

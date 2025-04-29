@@ -18,3 +18,4 @@ isn-*
 resources/public/data/notes/*.edn
 resources/public/data/signals/*.edn
 build
+data/signals/*

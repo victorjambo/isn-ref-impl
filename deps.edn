@@ -10,7 +10,7 @@
         hiccup/hiccup                              {:mvn/version "1.0.5"}
         enlive/enlive                              {:mvn/version "1.1.6"}
         dev.weavejester/medley                     {:mvn/version "1.7.0"}
-        ch.qos.logback/logback-classic             {:mvn/version "1.4.14"
+        ch.qos.logback/logback-classic             {:mvn/version "1.2.11"
                                                     :exclusions [org.slf4j/slf4j-api]}
         org.slf4j/slf4j-api                        {:mvn/version "2.0.11"}
         org.slf4j/jul-to-slf4j                     {:mvn/version "2.0.11"}
