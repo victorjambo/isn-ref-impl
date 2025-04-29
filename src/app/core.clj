@@ -66,7 +66,7 @@
 (s/def ::data-path s-exists?)
 (s/def ::dev-site s-uri?)
 (s/def ::indieauth-token-uri s-uri?)
-(s/def ::indieauth-state string?) 
+(s/def ::indieauth-state string?)
 (s/def ::config (s/keys :req-un [::site-name ::site-root ::user ::authcns ::indieauth-token-uri ::indieauth-state ::data-path ::dev-site]))
 
 (defmacro if-let*
@@ -96,7 +96,7 @@
 (defn- validate-token [{:keys [cfg token]}]
   (if (dev? cfg)
     {"me" (:dev-site cfg)}
-    (let [rsp @(client/get (:indieauth-token-uri cfg) {:headers {"Authorization" token "Accept" "application/json"}})] 
+    (let [rsp @(client/get (:indieauth-token-uri cfg) {:headers {"Authorization" token "Accept" "application/json"}})]
       (json/read-str (:body rsp)))))
 
 (defn- authcn?
@@ -123,7 +123,7 @@
              (remove #(or (before? (instant (:publishedDateTime %)) (instant from)) (after? (instant (:publishedDateTime %)) (instant to))) fs-xs)
              fs-xs)
         cat-xs (if category (filter #(some (:category %) #{category}) xs) xs)
-        isn-xs (if isn (filter #(some (:category %) #{(str "isn@" isn)}) cat-xs ) cat-xs)
+        isn-xs (if isn (filter #(some (:category %) #{(str "isn@" isn)}) cat-xs) cat-xs)
         sigs (if api? (map #(dissoc % :isn :permafrag :summary) isn-xs) isn-xs)] ; REVIEW: sort signal by pubish date time somewhere?
     (group-by :correlation-id sigs)))
 
@@ -143,17 +143,17 @@
 
 (defn head [{:keys [cfg] :as req}]
   [:html [:head
-   [:meta {:charset "utf-8"}]
-   [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
-   [:link {:rel "authorization_endpoint" :href "https://indieauth.com/auth"}]
-   [:link {:rel "token_endpoint" :href (:indieauth-token-uri cfg)}]
-   [:link {:rel "micropub" :href (str rel-root "/micropub")}]
-   [:link {:rel "webmention" :href (str (:rel-root cfg) "/webmention")}]
-   [:link {:rel "microsub" :href (:microsub-uri cfg)}]
-   [:link {:rel "stylesheet" :type "text/css" :href "/css/bootstrap.min.css"}]
-   [:link {:rel "stylesheet" :type "text/css" :href "/css/bootstrap-icons.css"}]
-   [:link {:rel "stylesheet" :type "text/css" :href "/css/style.css"}]
-   [:title (:site-name cfg)]]])
+          [:meta {:charset "utf-8"}]
+          [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
+          [:link {:rel "authorization_endpoint" :href "https://indieauth.com/auth"}]
+          [:link {:rel "token_endpoint" :href (:indieauth-token-uri cfg)}]
+          [:link {:rel "micropub" :href (str rel-root "/micropub")}]
+          [:link {:rel "webmention" :href (str (:rel-root cfg) "/webmention")}]
+          [:link {:rel "microsub" :href (:microsub-uri cfg)}]
+          [:link {:rel "stylesheet" :type "text/css" :href "/css/bootstrap.min.css"}]
+          [:link {:rel "stylesheet" :type "text/css" :href "/css/bootstrap-icons.css"}]
+          [:link {:rel "stylesheet" :type "text/css" :href "/css/style.css"}]
+          [:title (:site-name cfg)]]])
 
 (defn navbar [{:keys [cfg session]}]
   [:nav.navbar.navbar-expand-md.navbar-light.fixed-top.bg-light
@@ -202,21 +202,20 @@
 
 (defn login-view []
   [:ui.l/card {} "Please log in"
-        [:p "Please " [:a {:href "/login"} "login"] " to to see the dashboard"]])
+   [:p "Please " [:a {:href "/login"} "login"] " to to see the dashboard"]])
 
 (defn signal-list-item [{:keys [isns show-eta] :as cfg} {:keys [category isn payload permafrag provider start summary] :as sig}]
   (let [domain-cat (first (remove #(includes? % "isn@") category))
         show-keys (get-in ((keyword isn) isns) [:signals (keyword domain-cat) :list-payload-keys])]; see signal definition edn
-    [:div 
-     [:p [:span [:b "ISN signal type : "] (str isn) ] ]
-     [:p [:b "Provider : "] [:a.p-author.h-card {:href (str "https://" provider) :target "_blank"} provider] ]
-     [:p [:b "Published : "] [:time.dt-published {:datetime (:publishedDateTime sig)} (:publishedDateTime sig)] ]
+    [:div
+     [:p [:span [:b "ISN signal type : "] (str isn)]]
+     [:p [:b "Provider : "] [:a.p-author.h-card {:href (str "https://" provider) :target "_blank"} provider]]
+     [:p [:b "Published : "] [:time.dt-published {:datetime (:publishedDateTime sig)} (:publishedDateTime sig)]]
      [:div [:a.p-summary {:href permafrag} summary]]
      [:ul
-      (for [[k v] (select-keys payload show-keys)] [:li [:b k] ": " (str v)])] 
+      (for [[k v] (select-keys payload show-keys)] [:li [:b k] ": " (str v)])]
      [:div
-      (when (and start show-eta) [:div [:b "ETA : "] [:span start]]) 
-      ]]))
+      (when (and start show-eta) [:div [:b "ETA : "] [:span start]])]]))
 
 (defn signals-list [f-sig-list f-sig-item {:keys [cfg query-params session]} category]
   (let [sorted-xs (f-sig-list {:cfg cfg :api? false :user (:user session) :filters (or query-params {})} category)]
@@ -231,7 +230,7 @@
               (for [sig (rest sorted-sigs)]
                 [:li.h-event.thread.list-group-item
                  [:div
-                  [:p [:b "Provider : "] [:a.p-author.h-card {:href (str "https://" (sig :provider)) :target "_blank"} (sig :provider)] ]
+                  [:p [:b "Provider : "] [:a.p-author.h-card {:href (str "https://" (sig :provider)) :target "_blank"} (sig :provider)]]
                   [:i.bi.bi-list-nested] " "
                   [:a.p-summary {:href (:permafrag sig)} (:summary sig)]]])])]))]]))
 
@@ -405,30 +404,30 @@
             isn-cat (first (filter #(includes? % "isn@") cat))
             isn (subs isn-cat 4)
             sig-conf (get-in cfg [:isns (keyword isn)])]
-    (let [map-data (cond
-                     (:description m) (keywordize-keys (into {} (map #(split % #"=") (split (:description m) #"\^"))))
-                     (:payload m) (:payload m)
-                     :else {})
+           (let [map-data (cond
+                            (:description m) (keywordize-keys (into {} (map #(split % #"=") (split (:description m) #"\^"))))
+                            (:payload m) (:payload m)
+                            :else {})
             ;(if (:description m) (keywordize-keys (into {} (map #(split % #"=") (split (:description m) #"\^")))) {})
-          corr-id (or (:correlation-id m) (str (UUID/randomUUID)))
-          sig-id (str (UUID/randomUUID)) 
-          domain-cat (keyword (first (remove #(includes? % "isn@") cat)))
-          sig-expiry (get-in sig-conf [:signals domain-cat :expiry-days-from-now])
-          post (make-post m)
-          primary-map (-> post
-                          (assoc :isn isn)
-                          (assoc :category (if (vector? cat) (into #{} cat) (if (nil? cat) nil (conj #{} cat))))
-                          (assoc :permafrag (str "signals/" (str (replace (:publishedDate post) "-" "") "-" (first (split corr-id #"-")) "-" (first (split sig-id #"-")))))
-                          (assoc :object (:name m))
-                          (assoc :predicate (:summary m))
-                          (assoc :summary (str (:name m)  " " (:summary m)))
-                          (assoc :correlation-id corr-id)
-                          (assoc :signalId sig-id)
-                          (assoc :end (if (blank? (:end m)) (str (instant (plus (instant) (days sig-expiry)))) (str->inst (:end m))))
-                          (assoc :payload map-data))
-          with-start-map (if-let [start (:start m)] (assoc primary-map :start (str->inst start)) primary-map)]
-      with-start-map)
-    {}))
+                 corr-id (or (:correlation-id m) (str (UUID/randomUUID)))
+                 sig-id (str (UUID/randomUUID))
+                 domain-cat (keyword (first (remove #(includes? % "isn@") cat)))
+                 sig-expiry (get-in sig-conf [:signals domain-cat :expiry-days-from-now])
+                 post (make-post m)
+                 primary-map (-> post
+                                 (assoc :isn isn)
+                                 (assoc :category (if (vector? cat) (into #{} cat) (if (nil? cat) nil (conj #{} cat))))
+                                 (assoc :permafrag (str "signals/" (str (replace (:publishedDate post) "-" "") "-" (first (split corr-id #"-")) "-" (first (split sig-id #"-")))))
+                                 (assoc :object (:name m))
+                                 (assoc :predicate (:summary m))
+                                 (assoc :summary (str (:name m)  " " (:summary m)))
+                                 (assoc :correlation-id corr-id)
+                                 (assoc :signalId sig-id)
+                                 (assoc :end (if (blank? (:end m)) (str (instant (plus (instant) (days sig-expiry)))) (str->inst (:end m))))
+                                 (assoc :payload map-data))
+                 with-start-map (if-let [start (:start m)] (assoc primary-map :start (str->inst start)) primary-map)]
+             with-start-map)
+           {}))
 
 (defmethod dispatch-post :content [{:keys [category content] :as m}] ; note
   (debug :isn-site/dispatch-post-note {})
@@ -474,11 +473,11 @@
 
 ; REVIEW: needs to be modified to only send specific ISN relevant signals
 ; REVIEW: needs to have cfg passed as input
-(defn- sse-stream-ready [event-chan {:keys [request]}] 
+(defn- sse-stream-ready [event-chan {:keys [request]}]
   (let [{uri :uri {client :client connection-uuid :connection-uuid} :path-params headers :headers} request
         id (:id (token-header->id headers))]
     (if (and (get-in request [:headers "authorization"]) (authcn? {:id id}))
-      (do 
+      (do
         (swap! subscribers assoc (keyword (str client connection-uuid)) {:event-channel event-chan :uri uri})
         (async/>!! event-chan {:name "log-msg" :data "Client has subscribed to ISN SSE stream"}))
       (async/>!! event-chan {:name "log-msg" :data "Error - client could not be subscribed to ISN SSE stream"}))))
