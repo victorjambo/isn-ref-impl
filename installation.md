@@ -1,10 +1,10 @@
-# Installing Java
+# Running the project
 
-This Project uses Java 52.
+This project fork comes with configs that should work out of the box.
 
 ## Steps
 
-- You can use SDKMAN! (https://sdkman.io/) to install Java. Ensure you have sdk installed before you proceed.
+- This Project uses Java 52. You can use SDKMAN! (https://sdkman.io/) to install Java. Ensure you have sdk installed before you proceed.
 
   ```bash
   curl -s "https://get.sdkman.io" | bash
@@ -33,6 +33,14 @@ This Project uses Java 52.
 
   ```bash
   clj --version
+  ```
+
+- Update config file with location of your project https://github.com/victorjambo/isn-ref-impl/blob/develop/config.edn#L26 
+
+- Create signals folder. its used to store sent signals
+
+  ```bash
+  mkdir signals
   ```
 
 - Finally run the project
