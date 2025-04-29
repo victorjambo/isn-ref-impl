@@ -14,7 +14,7 @@
     }
    :btd-1.info-sharing.network #{#ref [:user]}
  } 
- :isns #merge [ #include "btd-1/isn-btd-1.edn" #include "sample-signal-defs/lab-test-signal-def.edn" ]
+ :isns #merge [ #include "btd/btd.edn" #include "sample-signal-defs/lab-test-signal-def.edn" ]
  :microsub-uri "https://victorjambo.github.io" 
  :show-eta true 
  :site-type "participant" 

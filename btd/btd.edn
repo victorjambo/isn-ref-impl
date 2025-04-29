@@ -1,0 +1,58 @@
+{
+  :btd-1.info-sharing.network {
+    :details {
+      :name "ISN BTD 1 (SPS import notification)"
+      :purpose "Exchanging pre-notification and related signals"
+    }
+    :signals {
+      :pre-notification {
+        :description "Data about incoming SPS goods movements"
+        :properties {
+          :chedNumbers "a list of CHED reference numbers related to the movement"
+          :cnCodes "a list of Commodity Codes for the goods"
+          :commodityDescription "a summary description of the goods in the movement"
+          :exporterEORI "Economic operator ID for the exporter"
+          :importerEORI "Economic operator ID for the importer"
+          :location "location of where goods are loaded"
+          :countryOfOrigin "country the goods originted in"
+          :mode "RORO  (Rail/Air/Maritime not supported in this signal definition)"
+          
+          :unitIdentification {
+            :trailerRegistrationNumber "TRN should be supplied where available"
+            :containerNumber "supply where relevant"
+            :tractorRegristratioNumber "VRN for drive accompanied movements"
+          }
+          :sampleTestResultsURL "url link to the test result certificate on TWIN"
+        }
+        :list-payload-keys [:cnCodes :countryOfOrigin]
+        :expiry-days-from-now 14
+      }
+      :despatch {
+        :description "data sent when the vehicle has set off to the port" 
+        :properties {
+           :portOfEntry "port of entry name"
+           :plannedDepartureTime "Date Time ISO 8601"
+           :portOfExit "port of exit name"
+           :actualDepartureTime "Date Time ISO 8601"
+           :mode "RORO  (Rail/Air/Maritime not supported in this signal definition)"
+           :sealNumbers "seals applied to the vehicle"
+           :chedNumbers "a list of CHED reference numbers related to the movement"
+           :countryOfOrigin "country the goods originted in"
+           :unitIdentification {
+            :trailerRegistrationNumber "TRN should be supplied where available"
+            :containerNumber "supply where relevant"
+            :tractorRegristratioNumber "VRN for drive accompanied movements"
+           }
+           :commodityDescription "a summary description of the goods in the movement"
+           :destinationPlant "location of the destination for the goods"
+           :location "location of where goods are loaded"
+           :cnCodes "a list of Commodity Codes for the goods"
+           :importerEORI "Economic operator ID for the importer"
+           :exporterEORI "Economic operator ID for the exporter"
+        }
+        :list-payload-keys [:plannedDepartureTime :actualDepartureTime :portOfEntry]
+        :expiry-days-from-now 14
+      }
+    }
+  }
+ }
