@@ -6,7 +6,6 @@
 .clj-kondo
 .nrepl-port
 nohup.out
-config.edn
 deploy.sh
 isn-*.edn
 isn.tgz
@@ -18,4 +17,4 @@ isn-*
 resources/public/data/notes/*.edn
 resources/public/data/signals/*.edn
 build
-data/signals/*
+signals/*

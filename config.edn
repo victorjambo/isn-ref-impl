@@ -1,0 +1,42 @@
+{:port 5001
+ :version #include "version.edn"
+ :site-name "ISN Local Test Site"
+ :user "victorjambo.github.io"
+ :rel-root #join ["https://" #ref [:user]] 
+ :site-root "http://localhost:5001"  
+ :rel-me-github "https://victorjambo.github.io" 
+ :authcns {
+   :sps-signal.info-sharing.network #{ 
+      #ref [:user] 
+    }
+   :lab-test-signal.info-sharing.network #{ 
+      #ref [:user] 
+    }
+   :btd-1.info-sharing.network #{#ref [:user]}
+ } 
+ :isns #merge [ #include "btd-1/isn-btd-1.edn" #include "sample-signal-defs/lab-test-signal-def.edn" ]
+ :microsub-uri "https://victorjambo.github.io" 
+ :show-eta true 
+ :site-type "participant" 
+ :indieauth-email "email@email.com"
+ :indieauth-token-uri "https://tokens.indieauth.com/token"
+ :indieauth-state "nodeNomads" 
+ :indielogin-uri "https://some-indielogin.tld/auth" 
+ :redirect-uri "/account" 
+ :data-path "/Users/victormutai/workspace/if/isn-ref-implementation"
+ :environment "production" ; setting the env to dev will remove the need to supply a valid token
+ :dev-site "https://isnuser.example.com" ; default site to use in token lookup site resolution in dev mode (not currently used)
+ :support-email "support@email.com" ; a configurable support email which may point to either an ISN Executive Committee tech function or an ISN Network Executive Committee tech function
+ :csp-settings {
+   :connect-src #ref [:site-root]
+   :frame-ancestors #ref [:site-root]
+   :font-src #ref [:site-root]
+   ; :form-action #ref [:site-root] ; REVIEW: this causes problems with the default configuration
+   :frame-src #ref [:site-root]
+   :img-src #ref [:site-root]
+   :manifest-src #ref [:site-root]
+   :media-src #ref [:site-root]
+   :object-src #ref [:site-root]
+   :style-src #ref [:site-root]
+   :script-src #ref [:site-root]} ; security settings
+ }
