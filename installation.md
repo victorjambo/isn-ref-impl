@@ -67,3 +67,15 @@ This project fork comes with configs that should work out of the box.
   BTD_PHA_ENDPOINT=http://localhost:5001/micropub-btd
   BTD_PHA_ACCESS_TOKEN=xxx
   ```
+
+### Caveats
+
+You need to create your own Github Pages for you to login with github. Follow steps bellow;
+
+
+- Fork this repo https://github.com/victorjambo/victorjambo.github.io
+- Update the name of the repo to something like your-profile-handle.github.io
+- Update this line https://github.com/victorjambo/victorjambo.github.io/blob/main/index.html#L9 with your-profile-handle.github.io
+- Update config.edn. Replace all traces of victorjambo.github.io with your-profile-handle.github.io
+- On the UI, on the [login page](http://localhost:5001/login) paste the URL http://your-profile-handle.github.io
+- Finally, on your github Profile add http://your-profile-handle.github.io as your website
